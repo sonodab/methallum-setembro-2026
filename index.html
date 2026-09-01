@@ -384,27 +384,6 @@
         font-weight: 600;
       }
 
-      .image-copy {
-        margin-top: 32px;
-        padding: 20px 0 0;
-        border-top: 1px solid var(--soft);
-      }
-
-      .image-copy strong {
-        display: block;
-        margin-bottom: 8px;
-        font-size: 10px;
-        letter-spacing: 0.15em;
-        text-transform: uppercase;
-      }
-
-      .image-copy p {
-        margin: 0;
-        color: var(--muted);
-        font-size: 14px;
-        line-height: 1.55;
-      }
-
       .footer {
         padding: 72px 0;
         background: var(--ink);
@@ -686,7 +665,6 @@ Descreva sua rotina para a Methallum e escolha Telwin pelo que acontece toda sem
               <button class="copy-button" type="button" data-copy="${index}">Copiar legenda</button>
             </div>
             <div class="caption">${captionHtml(post.legend)}</div>
-            <div class="image-copy"><strong>Texto para a imagem</strong><p>${escapeHtml(post.imageCopy)}</p></div>
           </div>
         </article>
       `).join("");
