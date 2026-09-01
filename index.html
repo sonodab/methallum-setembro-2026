@@ -319,86 +319,9 @@
       }
 
       .post-visual {
-        position: relative;
-        display: flex;
         min-height: 540px;
-        flex-direction: column;
-        justify-content: space-between;
-        padding: 34px;
-        overflow: hidden;
         border-right: 1px solid var(--line);
-        background-color: #242323;
-        background-image:
-          linear-gradient(rgba(255, 255, 255, 0.065) 1px, transparent 1px),
-          linear-gradient(90deg, rgba(255, 255, 255, 0.065) 1px, transparent 1px);
-        background-size: 42px 42px;
-        color: #fff;
-      }
-
-      .post-visual::after {
-        content: "";
-        position: absolute;
-        right: -90px;
-        bottom: -90px;
-        width: 250px;
-        height: 250px;
-        border: 52px solid var(--accent);
-        border-radius: 50%;
-        opacity: 0.92;
-      }
-
-      .visual-brand,
-      .visual-copy { position: relative; z-index: 1; }
-
-      .visual-brand {
-        display: flex;
-        align-items: center;
-        gap: 12px;
-        font-size: 13px;
-        font-weight: 600;
-      }
-
-      .visual-mark {
-        display: grid;
-        width: 32px;
-        height: 32px;
-        place-items: center;
-        border-radius: 50%;
-        background: var(--accent);
-        color: #fff;
-        font-family: "Barlow Condensed", sans-serif;
-        font-weight: 800;
-      }
-
-      .visual-copy small {
-        display: block;
-        margin-bottom: 14px;
-        color: #c8c5c1;
-        font-size: 10px;
-        font-weight: 600;
-        letter-spacing: 0.18em;
-        text-transform: uppercase;
-      }
-
-      .visual-copy h3 {
-        max-width: 430px;
-        margin: 0;
-        font-family: "Barlow Condensed", sans-serif;
-        font-size: clamp(36px, 4vw, 58px);
-        line-height: 0.97;
-        text-transform: uppercase;
-      }
-
-      .visual-brief {
-        position: relative;
-        z-index: 1;
-        max-width: 420px;
-        margin: 30px 0 0;
-        padding-top: 18px;
-        border-top: 1px solid rgba(255, 255, 255, 0.23);
-        color: #d2cfca;
-        font-size: 13px;
-        line-height: 1.55;
+        background: #e6e5e2;
       }
 
       .post-content { padding: 40px 44px 46px; }
@@ -752,14 +675,7 @@ Descreva sua rotina para a Methallum e escolha Telwin pelo que acontece toda sem
 
       document.getElementById("postsList").innerHTML = posts.map((post, index) => `
         <article class="post-card">
-          <div class="post-visual">
-            <div class="visual-brand"><span class="visual-mark">M</span><span>Methallum</span></div>
-            <div class="visual-copy">
-              <small>${escapeHtml(post.category)} · Direção visual</small>
-              <h3>${escapeHtml(post.imageCopy)}</h3>
-              <p class="visual-brief">${escapeHtml(post.imageBrief)}</p>
-            </div>
-          </div>
+          <div class="post-visual" aria-label="Espaço reservado para a imagem final"></div>
           <div class="post-content">
             <div class="post-head">
               <div>
