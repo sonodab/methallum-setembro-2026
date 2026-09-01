@@ -1,0 +1,810 @@
+<!doctype html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow, noarchive" />
+    <meta name="theme-color" content="#f4f3f1" />
+    <title>Methallum | Aprovação Setembro 2026</title>
+    <link rel="icon" href="./favicon.svg" type="image/svg+xml" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700;800&family=IBM+Plex+Sans:wght@400;500;600&display=swap" rel="stylesheet" />
+    <style>
+      :root {
+        --accent: #f02b1d;
+        --accent-dark: #b81910;
+        --ink: #111111;
+        --muted: #686560;
+        --paper: #ffffff;
+        --canvas: #f4f3f1;
+        --line: #d9d6d1;
+        --soft: #eceae6;
+        color-scheme: light;
+      }
+
+      * { box-sizing: border-box; }
+
+      html { scroll-behavior: smooth; }
+
+      body {
+        margin: 0;
+        background: var(--canvas);
+        color: var(--ink);
+        font-family: "IBM Plex Sans", sans-serif;
+        letter-spacing: 0;
+      }
+
+      button, a { font: inherit; }
+
+      a { color: inherit; }
+
+      .loading-screen {
+        position: fixed;
+        inset: 0;
+        z-index: 100;
+        display: grid;
+        place-items: center;
+        background-color: var(--canvas);
+        background-image:
+          linear-gradient(rgba(17, 17, 17, 0.055) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(17, 17, 17, 0.055) 1px, transparent 1px);
+        background-size: 52px 52px;
+        transition: opacity 380ms ease, visibility 380ms ease;
+      }
+
+      .loading-screen.is-finished {
+        opacity: 0;
+        visibility: hidden;
+        pointer-events: none;
+      }
+
+      .loading-lockup { text-align: center; }
+
+      .loading-name {
+        margin: 0 0 22px;
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 28px;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .loading-spinner {
+        width: 30px;
+        height: 30px;
+        margin: 0 auto 18px;
+        border: 2px solid rgba(17, 17, 17, 0.15);
+        border-top-color: var(--accent);
+        border-radius: 50%;
+        animation: spin 850ms linear infinite;
+      }
+
+      .loading-caption {
+        margin: 0;
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      @keyframes spin { to { transform: rotate(360deg); } }
+
+      .hero {
+        min-height: 620px;
+        border-bottom: 1px solid var(--line);
+        background-color: #f8f7f5;
+        background-image:
+          linear-gradient(rgba(17, 17, 17, 0.055) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(17, 17, 17, 0.055) 1px, transparent 1px);
+        background-size: 52px 52px;
+      }
+
+      .shell {
+        width: min(1180px, calc(100% - 48px));
+        margin: 0 auto;
+      }
+
+      .topbar {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 24px;
+        min-height: 92px;
+        border-bottom: 1px solid rgba(17, 17, 17, 0.12);
+      }
+
+      .signature {
+        display: inline-flex;
+        align-items: center;
+        gap: 14px;
+        text-decoration: none;
+      }
+
+      .signature-mark {
+        display: grid;
+        width: 42px;
+        height: 42px;
+        place-items: center;
+        border-radius: 6px;
+        background: var(--ink);
+        color: #fff;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 800;
+      }
+
+      .signature-copy strong,
+      .signature-copy span { display: block; }
+
+      .signature-copy strong { font-size: 14px; }
+
+      .signature-copy span {
+        margin-top: 2px;
+        color: var(--muted);
+        font-size: 11px;
+      }
+
+      .drive-link,
+      .copy-button {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        min-height: 44px;
+        padding: 0 18px;
+        border: 1px solid var(--ink);
+        border-radius: 6px;
+        background: var(--ink);
+        color: #fff;
+        font-weight: 600;
+        text-decoration: none;
+        cursor: pointer;
+        transition: transform 160ms ease, background 160ms ease;
+      }
+
+      .drive-link:hover,
+      .copy-button:hover { transform: translateY(-2px); background: var(--accent-dark); }
+
+      .hero-layout {
+        display: grid;
+        grid-template-columns: minmax(0, 1.55fr) minmax(280px, 0.65fr);
+        gap: 72px;
+        align-items: end;
+        padding: 78px 0 48px;
+      }
+
+      .eyebrow,
+      .section-eyebrow,
+      .post-number,
+      .status-label {
+        margin: 0;
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.24em;
+        text-transform: uppercase;
+      }
+
+      .client-name {
+        margin: 14px 0 0;
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: clamp(58px, 9vw, 126px);
+        font-weight: 800;
+        line-height: 0.78;
+        text-transform: uppercase;
+      }
+
+      .month-title {
+        display: flex;
+        align-items: baseline;
+        gap: 16px;
+        margin: 42px 0 0;
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: clamp(44px, 7vw, 92px);
+        font-weight: 700;
+        line-height: 0.85;
+        text-transform: uppercase;
+      }
+
+      .month-title span:last-child {
+        color: var(--accent);
+        font-size: 0.46em;
+      }
+
+      .hero-copy {
+        max-width: 620px;
+        margin: 30px 0 0;
+        color: #3d3a36;
+        font-size: 17px;
+        line-height: 1.7;
+      }
+
+      .status-block {
+        padding: 28px 0 6px;
+        border-top: 1px solid var(--line);
+      }
+
+      .status-value {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin: 12px 0 0;
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 34px;
+        font-weight: 700;
+        text-transform: uppercase;
+      }
+
+      .status-dot {
+        width: 11px;
+        height: 11px;
+        border-radius: 50%;
+        background: var(--accent);
+      }
+
+      .summary {
+        display: grid;
+        grid-template-columns: repeat(4, 1fr);
+        border-top: 1px solid rgba(17, 17, 17, 0.12);
+      }
+
+      .summary-item {
+        display: flex;
+        align-items: baseline;
+        justify-content: space-between;
+        gap: 14px;
+        min-height: 104px;
+        padding: 28px 24px;
+        border-right: 1px solid rgba(17, 17, 17, 0.12);
+      }
+
+      .summary-item:first-child { padding-left: 0; }
+      .summary-item:last-child { border-right: 0; }
+
+      .summary-item strong {
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: 38px;
+      }
+
+      .summary-item span {
+        color: var(--muted);
+        font-size: 11px;
+        text-transform: uppercase;
+      }
+
+      .hero [data-reveal] {
+        opacity: 0;
+        transform: translateY(10px);
+      }
+
+      body.is-ready .hero [data-reveal] {
+        opacity: 1;
+        transform: translateY(0);
+        transition: opacity 440ms ease, transform 440ms ease;
+        transition-delay: var(--delay, 0ms);
+      }
+
+      .posts-section { padding: 84px 0 110px; }
+
+      .section-heading {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        gap: 24px;
+        align-items: end;
+        margin-bottom: 34px;
+      }
+
+      .section-heading h2 {
+        margin: 10px 0 0;
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: clamp(42px, 5vw, 66px);
+        line-height: 0.95;
+        text-transform: uppercase;
+      }
+
+      .section-heading p:last-child {
+        max-width: 360px;
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.6;
+      }
+
+      .posts-list { display: grid; gap: 28px; }
+
+      .post-card {
+        display: grid;
+        grid-template-columns: minmax(300px, 0.82fr) minmax(0, 1.18fr);
+        overflow: hidden;
+        border: 1px solid var(--line);
+        border-top: 4px solid var(--accent);
+        border-radius: 8px;
+        background: var(--paper);
+      }
+
+      .post-visual {
+        position: relative;
+        display: flex;
+        min-height: 540px;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 34px;
+        overflow: hidden;
+        border-right: 1px solid var(--line);
+        background-color: #242323;
+        background-image:
+          linear-gradient(rgba(255, 255, 255, 0.065) 1px, transparent 1px),
+          linear-gradient(90deg, rgba(255, 255, 255, 0.065) 1px, transparent 1px);
+        background-size: 42px 42px;
+        color: #fff;
+      }
+
+      .post-visual::after {
+        content: "";
+        position: absolute;
+        right: -90px;
+        bottom: -90px;
+        width: 250px;
+        height: 250px;
+        border: 52px solid var(--accent);
+        border-radius: 50%;
+        opacity: 0.92;
+      }
+
+      .visual-brand,
+      .visual-copy { position: relative; z-index: 1; }
+
+      .visual-brand {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        font-size: 13px;
+        font-weight: 600;
+      }
+
+      .visual-mark {
+        display: grid;
+        width: 32px;
+        height: 32px;
+        place-items: center;
+        border-radius: 50%;
+        background: var(--accent);
+        color: #fff;
+        font-family: "Barlow Condensed", sans-serif;
+        font-weight: 800;
+      }
+
+      .visual-copy small {
+        display: block;
+        margin-bottom: 14px;
+        color: #c8c5c1;
+        font-size: 10px;
+        font-weight: 600;
+        letter-spacing: 0.18em;
+        text-transform: uppercase;
+      }
+
+      .visual-copy h3 {
+        max-width: 430px;
+        margin: 0;
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: clamp(36px, 4vw, 58px);
+        line-height: 0.97;
+        text-transform: uppercase;
+      }
+
+      .visual-brief {
+        position: relative;
+        z-index: 1;
+        max-width: 420px;
+        margin: 30px 0 0;
+        padding-top: 18px;
+        border-top: 1px solid rgba(255, 255, 255, 0.23);
+        color: #d2cfca;
+        font-size: 13px;
+        line-height: 1.55;
+      }
+
+      .post-content { padding: 40px 44px 46px; }
+
+      .post-head {
+        display: flex;
+        align-items: flex-start;
+        justify-content: space-between;
+        gap: 20px;
+        padding-bottom: 28px;
+        border-bottom: 1px solid var(--soft);
+      }
+
+      .post-number { color: var(--accent-dark); }
+
+      .post-title {
+        max-width: 670px;
+        margin: 10px 0 0;
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: clamp(31px, 3vw, 44px);
+        line-height: 1.02;
+      }
+
+      .post-meta {
+        display: inline-flex;
+        margin-top: 16px;
+        padding: 6px 9px;
+        border: 1px solid #dddad5;
+        border-radius: 999px;
+        color: var(--muted);
+        font-size: 10px;
+        font-weight: 600;
+        text-transform: uppercase;
+      }
+
+      .copy-button {
+        flex: 0 0 auto;
+        min-height: 40px;
+        padding-inline: 14px;
+        border-color: var(--line);
+        background: #fff;
+        color: var(--ink);
+        font-size: 12px;
+      }
+
+      .copy-button:hover { color: #fff; }
+
+      .caption { padding-top: 30px; }
+
+      .caption p {
+        margin: 0 0 20px;
+        color: #302e2b;
+        font-size: 16px;
+        line-height: 1.72;
+      }
+
+      .caption .hashtags {
+        margin-top: 30px;
+        color: var(--accent-dark);
+        font-weight: 600;
+      }
+
+      .image-copy {
+        margin-top: 32px;
+        padding: 20px 0 0;
+        border-top: 1px solid var(--soft);
+      }
+
+      .image-copy strong {
+        display: block;
+        margin-bottom: 8px;
+        font-size: 10px;
+        letter-spacing: 0.15em;
+        text-transform: uppercase;
+      }
+
+      .image-copy p {
+        margin: 0;
+        color: var(--muted);
+        font-size: 14px;
+        line-height: 1.55;
+      }
+
+      .footer {
+        padding: 72px 0;
+        background: var(--ink);
+        color: #fff;
+      }
+
+      .footer-layout {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 32px;
+      }
+
+      .footer h2 {
+        margin: 8px 0 0;
+        font-family: "Barlow Condensed", sans-serif;
+        font-size: clamp(38px, 5vw, 62px);
+        line-height: 0.95;
+        text-transform: uppercase;
+      }
+
+      .footer .section-eyebrow { color: #a9a6a1; }
+
+      .footer .drive-link {
+        border-color: #fff;
+        background: #fff;
+        color: var(--ink);
+      }
+
+      .footer .drive-link:hover { background: var(--accent); color: #fff; }
+
+      .toast {
+        position: fixed;
+        right: 20px;
+        bottom: 20px;
+        z-index: 20;
+        padding: 12px 16px;
+        border-radius: 6px;
+        background: var(--ink);
+        color: #fff;
+        font-size: 12px;
+        opacity: 0;
+        transform: translateY(8px);
+        pointer-events: none;
+        transition: opacity 180ms ease, transform 180ms ease;
+      }
+
+      .toast.is-visible { opacity: 1; transform: translateY(0); }
+
+      @media (max-width: 820px) {
+        .shell { width: min(100% - 28px, 680px); }
+        .topbar { min-height: 78px; }
+        .signature-copy { display: none; }
+        .hero { min-height: 0; }
+        .hero-layout { grid-template-columns: 1fr; gap: 40px; padding: 58px 0 42px; }
+        .client-name { font-size: 68px; }
+        .month-title { margin-top: 34px; }
+        .summary { grid-template-columns: repeat(2, 1fr); }
+        .summary-item { min-height: 86px; padding: 22px 16px; border-bottom: 1px solid rgba(17, 17, 17, 0.12); }
+        .summary-item:first-child { padding-left: 16px; }
+        .summary-item:nth-child(2) { border-right: 0; }
+        .section-heading { grid-template-columns: 1fr; }
+        .post-card { grid-template-columns: 1fr; }
+        .post-visual { min-height: 440px; border-right: 0; border-bottom: 1px solid var(--line); }
+        .post-content { padding: 30px 24px 36px; }
+        .post-head { display: block; }
+        .copy-button { margin-top: 20px; }
+        .footer-layout { align-items: flex-start; flex-direction: column; }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        *, *::before, *::after { scroll-behavior: auto !important; animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="loading-screen" id="loadingScreen" aria-live="polite">
+      <div class="loading-lockup">
+        <p class="loading-name">Bruno Sonoda</p>
+        <div class="loading-spinner" aria-hidden="true"></div>
+        <p class="loading-caption">Carregando os próximos posts.</p>
+      </div>
+    </div>
+
+    <header class="hero">
+      <div class="shell">
+        <div class="topbar" data-reveal style="--delay: 40ms">
+          <div class="signature">
+            <span class="signature-mark">BS</span>
+            <span class="signature-copy"><strong>Bruno Sonoda</strong><span>Planejamento de conteúdo</span></span>
+          </div>
+          <a class="drive-link" href="https://drive.google.com/drive/folders/1G1r8wbnYjhGiVMZbTEhEYtaRRK6HTtOi?usp=sharing" target="_blank" rel="noopener noreferrer">Abrir pasta no Drive</a>
+        </div>
+
+        <div class="hero-layout">
+          <div>
+            <p class="eyebrow" data-reveal style="--delay: 90ms">Entrega mensal · Setembro 2026</p>
+            <h1 class="client-name" data-reveal style="--delay: 140ms">Methallum</h1>
+            <h2 class="month-title" data-reveal style="--delay: 190ms"><span>Setembro</span><span>2026</span></h2>
+            <p class="hero-copy" data-reveal style="--delay: 240ms">Aprovação do planejamento mensal para Methallum. Confira post a post, copie a legenda e consulte a direção visual planejada para cada conteúdo.</p>
+          </div>
+          <aside class="status-block" data-reveal style="--delay: 290ms">
+            <p class="status-label">Status</p>
+            <p class="status-value"><span class="status-dot"></span>Aprovação</p>
+          </aside>
+        </div>
+
+        <div class="summary" data-reveal style="--delay: 340ms">
+          <div class="summary-item"><strong>6</strong><span>Posts</span></div>
+          <div class="summary-item"><strong>5</strong><span>Editorias</span></div>
+          <div class="summary-item"><strong>6</strong><span>Feed estático</span></div>
+          <div class="summary-item"><strong>0</strong><span>Carrosséis</span></div>
+        </div>
+      </div>
+    </header>
+
+    <main class="posts-section">
+      <div class="shell">
+        <div class="section-heading">
+          <div>
+            <p class="section-eyebrow">Conteúdos selecionados</p>
+            <h2>Planejamento do mês</h2>
+          </div>
+          <p>Os conteúdos estão apresentados na ordem de revisão. Use o botão de cada post para copiar a legenda completa.</p>
+        </div>
+        <div class="posts-list" id="postsList"></div>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <div class="shell footer-layout">
+        <div>
+          <p class="section-eyebrow">Arquivos finais</p>
+          <h2>Acesse a pasta da Methallum</h2>
+        </div>
+        <a class="drive-link" href="https://drive.google.com/drive/folders/1G1r8wbnYjhGiVMZbTEhEYtaRRK6HTtOi?usp=sharing" target="_blank" rel="noopener noreferrer">Abrir pasta no Drive</a>
+      </div>
+    </footer>
+
+    <div class="toast" id="toast" role="status">Legenda copiada.</div>
+
+    <script>
+      const posts = [
+        {
+          category: "Dicas B2B",
+          title: "Dica B2B | Indústria pressionada pede compra que reduza erro, não só preço",
+          theme: "Cenário de agosto da CNI e critério técnico de compra",
+          legend: `Quando confiança e investimento caem, comprar mal custa ainda mais.
+
+O ambiente industrial entrou em agosto com pessimismo e menos apetite de investimento. Isso aumenta o peso de cada decisão de MRO, abrasivo, soldagem e ferramenta.
+
+No B2B, critério técnico ajuda a proteger caixa, processo e prazo ao mesmo tempo.
+
+Leve sua aplicação para a Methallum e transforme compra em decisão defensável.
+
+#Methallum
+#DistribuidorIndustrial
+#PlanejamentoIndustrial`,
+          imageCopy: "Dica B2B: comprar bem protege mais no aperto.",
+          imageBrief: "Gestor industrial analisando lista técnica, custo e risco operacional em ambiente fabril."
+        },
+        {
+          category: "Dicas B2B",
+          title: "Dica B2B | Produção reage, investimento cai: é hora de proteger o que para a operação",
+          theme: "Leitura da CNI para itens críticos do Q4",
+          legend: `Nem todo sinal econômico puxa a mesma ação.
+
+Se a produção melhora, mas a intenção de investir recua, o foco precisa ir para item crítico, disponibilidade e compra que evita parada burra.
+
+Setembro é o momento certo para separar o urgente do importante antes do quarto trimestre apertar.
+
+Mapeie isso com a Methallum e trate item crítico como decisão de margem.
+
+#Methallum
+#DistribuidorIndustrial
+#GestaoMRO`,
+          imageCopy: "Dica B2B: proteja o que para a operação.",
+          imageBrief: "Painel fabril com indicadores e gestor checando itens críticos de manutenção."
+        },
+        {
+          category: "PFERD",
+          title: "PFERD | Linha CERAMIC faz sentido quando a remoção pesada precisa andar sem sacrificar leitura",
+          theme: "Aplicação de discos cerâmicos em aço",
+          legend: `Consumível mais agressivo não dispensa diagnóstico.
+
+Linha cerâmica ajuda quando o gargalo está em remoção pesada e vida útil, mas ela precisa conversar com material, seção e objetivo da etapa.
+
+Produto premium sem aplicação bem lida vira custo bonito e processo igual.
+
+Converse com a Methallum e encaixe PFERD onde desempenho realmente fecha conta.
+
+#Methallum
+#DistribuidorIndustrial
+#PFERDTools`,
+          imageCopy: "PFERD: desempenho forte precisa de leitura forte.",
+          imageBrief: "Aplicação de disco em aço com faísca controlada e resultado de remoção robusta."
+        },
+        {
+          category: "VSM",
+          title: "VSM | Catálogo novo só vira ganho quando encontra uma sequência de processo bem lida",
+          theme: "Portfólio 2026/2027 e disciplina de aplicação",
+          legend: `Novidade de portfólio não substitui método.
+
+O material 2026/2027 da VSM abre uma boa conversa sobre linha, aplicação e material, mas o resultado continua nascendo da sequência da peça e da troca no momento certo.
+
+Sem essa leitura, abrasivo premium entra no processo como promessa e sai como frustração.
+
+Leve sua etapa para a Methallum e aproxime VSM do fluxo inteiro da operação.
+
+#Methallum
+#DistribuidorIndustrial
+#VSM`,
+          imageCopy: "VSM: portfólio ajuda, processo decide.",
+          imageBrief: "Operador analisando acabamento metálico em diferentes etapas, com abrasivos ao lado."
+        },
+        {
+          category: "Milwaukee",
+          title: "Milwaukee | Alto torque com ONE-KEY entra quando mobilidade evita dependência de ar e mangueira",
+          theme: "Ferramenta sem fio para aperto pesado com rastreio",
+          legend: `Trocar tecnologia sem trocar critério só muda o formato do erro.
+
+Ferramenta de alto torque com rastreio faz sentido quando a aplicação ganha autonomia, disponibilidade e controle real no campo ou na manutenção.
+
+Não é sobre novidade por si só. É sobre o que ela elimina de gargalo no processo.
+
+Leve seu uso para a Methallum e avalie Milwaukee pelo trabalho que precisa ser entregue.
+
+#Methallum
+#DistribuidorIndustrial
+#Milwaukee`,
+          imageCopy: "Milwaukee: mobilidade precisa virar produtividade.",
+          imageBrief: "Ferramenta Milwaukee em manutenção pesada, sem mangueira, em ambiente industrial robusto."
+        },
+        {
+          category: "Telwin",
+          title: "Telwin | Supermig i só vira vantagem quando a oficina alterna serviço de verdade",
+          theme: "Versatilidade de linha multiprocesso",
+          legend: `Mais processo não vale por vaidade técnica.
+
+Linha multiprocesso entrega valor quando a oficina alterna materiais, espessuras e demandas com frequência real, não quando a flexibilidade fica parada na ficha.
+
+Setembro é uma boa janela para reler essa necessidade antes do fechamento do ano.
+
+Descreva sua rotina para a Methallum e escolha Telwin pelo que acontece toda semana.
+
+#Methallum
+#DistribuidorIndustrial
+#Telwin`,
+          imageCopy: "Telwin: flexibilidade precisa ter destino.",
+          imageBrief: "Oficina com diferentes frentes de soldagem e máquina multiprocesso em contexto real."
+        }
+      ];
+
+      const escapeHtml = (value) => String(value || "")
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+
+      const captionHtml = (legend) => {
+        const blocks = legend.trim().split(/\n\s*\n/);
+        return blocks.map((block) => {
+          const isHashtag = block.trim().startsWith("#");
+          return `<p class="${isHashtag ? "hashtags" : ""}">${escapeHtml(block).replaceAll("\n", "<br>")}</p>`;
+        }).join("");
+      };
+
+      document.getElementById("postsList").innerHTML = posts.map((post, index) => `
+        <article class="post-card">
+          <div class="post-visual">
+            <div class="visual-brand"><span class="visual-mark">M</span><span>Methallum</span></div>
+            <div class="visual-copy">
+              <small>${escapeHtml(post.category)} · Direção visual</small>
+              <h3>${escapeHtml(post.imageCopy)}</h3>
+              <p class="visual-brief">${escapeHtml(post.imageBrief)}</p>
+            </div>
+          </div>
+          <div class="post-content">
+            <div class="post-head">
+              <div>
+                <p class="post-number">Post ${String(index + 1).padStart(2, "0")}</p>
+                <h3 class="post-title">${escapeHtml(post.title)}</h3>
+                <span class="post-meta">${escapeHtml(post.category)} · Feed estático</span>
+              </div>
+              <button class="copy-button" type="button" data-copy="${index}">Copiar legenda</button>
+            </div>
+            <div class="caption">${captionHtml(post.legend)}</div>
+            <div class="image-copy"><strong>Texto para a imagem</strong><p>${escapeHtml(post.imageCopy)}</p></div>
+          </div>
+        </article>
+      `).join("");
+
+      const toast = document.getElementById("toast");
+      let toastTimer;
+
+      document.addEventListener("click", async (event) => {
+        const button = event.target.closest("[data-copy]");
+        if (!button) return;
+        const post = posts[Number(button.dataset.copy)];
+        try {
+          await navigator.clipboard.writeText(post.legend);
+        } catch (error) {
+          const input = document.createElement("textarea");
+          input.value = post.legend;
+          document.body.appendChild(input);
+          input.select();
+          document.execCommand("copy");
+          input.remove();
+        }
+        button.textContent = "Copiada";
+        window.setTimeout(() => { button.textContent = "Copiar legenda"; }, 1400);
+        toast.classList.add("is-visible");
+        window.clearTimeout(toastTimer);
+        toastTimer = window.setTimeout(() => toast.classList.remove("is-visible"), 1800);
+      });
+
+      window.addEventListener("load", () => {
+        window.setTimeout(() => {
+          document.getElementById("loadingScreen").classList.add("is-finished");
+          document.body.classList.add("is-ready");
+        }, 520);
+      });
+    </script>
+  </body>
+</html>
